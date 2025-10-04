@@ -4,7 +4,7 @@
 list_t *list_create() {
     list_t *list = malloc(sizeof(list_t));
     if (!list) {
-        printf("list create failed, with memory allocation: %s\n", strerror(errno));
+        errno = ENOMEM;
         return NULL;
     }
 
@@ -14,10 +14,38 @@ list_t *list_create() {
 }
 
 
+int list_add_back(list_t *list, int val) {
+    if (!list) {
+        errno  = EINVAL;
+        return -1;
+    }
+
+    node_t *node = malloc(sizeof(node_t));
+    if (!node) {
+        errno = ENOMEM;
+        return -1;
+    }
+
+    node->val = val;
+    node->next = NULL;
+
+    if (!list->head) {
+        list->head = node;
+    }
+
+    node_t *tmp = list->head;
+    while (!tmp->next) {
+        tmp = tmp->next;
+    } 
+    
+    tmp->next = node;
+    return 0;
+}
+
+
 
 void list_destroy(list_t *list) {
-    //make destroying to all nodes
-    //not all
+    
     free(list);
 }
 
