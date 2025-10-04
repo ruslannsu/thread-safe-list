@@ -45,6 +45,17 @@ int list_add_back(list_t *list, int val) {
 
 
 void list_destroy(list_t *list) {
+    if (!list->head) {
+        free(list);
+        return;
+    }
+
+    node_t *tmp = list->head;
+    while (!tmp) {
+        node_t *destroyed_node = tmp;
+        tmp = tmp->next;
+        free(destroyed_node); 
+    }
     
     free(list);
 }
