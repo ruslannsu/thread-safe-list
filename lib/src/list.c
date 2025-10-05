@@ -31,6 +31,7 @@ int list_add_back(list_t *list, int val) {
 
     if (!list->head) {
         list->head = node;
+        return 0;
     }
 
     node_t *tmp = list->head;
